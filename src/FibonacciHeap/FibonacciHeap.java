@@ -7,8 +7,7 @@ package FibonacciHeap;
  */
 public class FibonacciHeap
 {
-
-   /**
+	/**
     * public boolean empty()
     *
     * precondition: none
@@ -29,7 +28,7 @@ public class FibonacciHeap
     */
     public HeapNode insert(int key)
     {    
-    	return new HeapNode(); // should be replaced by student code
+    	return null; // should be replaced by student code
     }
 
    /**
@@ -52,7 +51,7 @@ public class FibonacciHeap
     */
     public HeapNode findMin()
     {
-    	return new HeapNode();// should be replaced by student code
+    	return null;// should be replaced by student code
     } 
     
    /**
@@ -157,7 +156,7 @@ public class FibonacciHeap
     {    
     	return 0; // should be replaced by student code
     }
-    
+
    /**
     * public class HeapNode
     * 
@@ -167,7 +166,7 @@ public class FibonacciHeap
     *  
     */
     public class HeapNode{
-  	public HeapNode(int key) {
-      }
+    	public HeapNode(int key) {
+    	}
     }
 }
