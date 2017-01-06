@@ -6,18 +6,18 @@ package FibonacciHeap;
  * An implementation of fibonacci heap over non-negative integers.
  */
 public class FibonacciHeap {
-	
-	private int size;
-	private HeapNode start;
-	private HeapNode minimum;
-	
-	public FibonacciHeap(){
-		this.size = 0;
-		this.start = null;
-		this.minimum = null;
-	}
-	
-	/**
+    
+    private int size;
+    private HeapNode start;
+    private HeapNode minimum;
+    
+    public FibonacciHeap(){
+        this.size = 0;
+        this.start = null;
+        this.minimum = null;
+    }
+    
+    /**
     * public boolean empty()
     *
     * precondition: none
@@ -28,7 +28,7 @@ public class FibonacciHeap {
     */
     public boolean empty()
     {
-    	return (this.size == 0);
+        return (this.size == 0);
     }
 
    /**
@@ -38,25 +38,25 @@ public class FibonacciHeap {
     */
     public HeapNode insert(int key)
     {    
-    	this.size++;
-    	
-    	HeapNode newNode = new HeapNode(key);
-    	if (this.start == null){
-    		newNode.next = newNode;
-    		newNode.prev = newNode;
-    		this.minimum = newNode;
-    	} else {
-    		newNode.next = this.start;
-    		newNode.prev = this.start.prev;
-    		newNode.next.prev = newNode;
-        	newNode.prev.next = newNode;
-        	if (key < this.minimum.key) {
-        		this.minimum = newNode;
-        	}
-    	}
+        this.size++;
+        
+        HeapNode newNode = new HeapNode(key);
+        if (this.start == null){
+            newNode.next = newNode;
+            newNode.prev = newNode;
+            this.minimum = newNode;
+        } else {
+            newNode.next = this.start;
+            newNode.prev = this.start.prev;
+            newNode.next.prev = newNode;
+            newNode.prev.next = newNode;
+            if (key < this.minimum.key) {
+                this.minimum = newNode;
+            }
+        }
 
-    	this.start = newNode;
-    	return newNode;
+        this.start = newNode;
+        return newNode;
     }
 
    /**
@@ -67,7 +67,7 @@ public class FibonacciHeap {
     */
     public void deleteMin()
     {
-    	this.delete(this.minimum);
+        this.delete(this.minimum);
     }
 
    /**
@@ -78,7 +78,7 @@ public class FibonacciHeap {
     */
     public HeapNode findMin()
     {
-    	return this.minimum;
+        return this.minimum;
     } 
     
    /**
@@ -89,7 +89,7 @@ public class FibonacciHeap {
     */
     public void meld(FibonacciHeap heap2)
     {
-    	  return; // should be replaced by student code   		
+    	return; // should be replaced by student code           
     }
 
    /**
@@ -100,9 +100,9 @@ public class FibonacciHeap {
     */
     public int size()
     {
-    	return this.size;
+        return this.size;
     }
-    	
+        
     /**
     * public int[] countersRep()
     *
@@ -111,8 +111,8 @@ public class FibonacciHeap {
     */
     public int[] countersRep()
     {
-    	int[] arr = new int[42];
-        return arr; //	 to be replaced by student code
+        int[] arr = new int[42];
+        return arr; //     to be replaced by student code
     }
 
    /**
@@ -123,9 +123,9 @@ public class FibonacciHeap {
     */
     public void arrayToHeap(int[] array)
     {
-        return; //	 to be replaced by student code
+        return; //     to be replaced by student code
     }
-	
+    
    /**
     * public void delete(HeapNode x)
     *
@@ -134,21 +134,21 @@ public class FibonacciHeap {
     */
     public void delete(HeapNode nodeToDelete) 
     {    
-    	this.size--;
-    	
-    	if (this.size == 0) {
-    		this.start = null;
-    	} else {
-    		if (this.start == nodeToDelete){
-        		this.start = nodeToDelete.next;
-        	}
-	    	nodeToDelete.prev.next = nodeToDelete.next;
-	    	nodeToDelete.next.prev = nodeToDelete.prev;
-    	}
-    	
-    	if (nodeToDelete == this.minimum) {
-	    	this.refindMin();
-    	}
+        this.size--;
+        
+        if (this.size == 0) {
+            this.start = null;
+        } else {
+            if (this.start == nodeToDelete){
+                this.start = nodeToDelete.next;
+            }
+            nodeToDelete.prev.next = nodeToDelete.next;
+            nodeToDelete.next.prev = nodeToDelete.prev;
+        }
+        
+        if (nodeToDelete == this.minimum) {
+            this.refindMin();
+        }
     }
     
     /**
@@ -157,18 +157,18 @@ public class FibonacciHeap {
      * The function finds the new minimum
      */
     private void refindMin() {
-    	if (this.start == null) {
-    		this.minimum = null;
-    	} else {
-	    	this.minimum = this.start;
-	    	HeapNode currentNode = this.start.next;
-	    	while (currentNode != this.start){
-	    		if (currentNode.key < this.minimum.key){
-	    			this.minimum = currentNode;
-	    		}
-	    		currentNode = currentNode.next;
-	    	}
-    	}
+        if (this.start == null) {
+            this.minimum = null;
+        } else {
+            this.minimum = this.start;
+            HeapNode currentNode = this.start.next;
+            while (currentNode != this.start){
+                if (currentNode.key < this.minimum.key){
+                    this.minimum = currentNode;
+                }
+                currentNode = currentNode.next;
+            }
+        }
     }
 
    /**
@@ -179,7 +179,7 @@ public class FibonacciHeap {
     */
     public void decreaseKey(HeapNode x, int delta)
     {    
-    	return; // should be replaced by student code
+        return; // should be replaced by student code
     }
 
    /**
@@ -191,7 +191,7 @@ public class FibonacciHeap {
     */
     public int potential() 
     {    
-    	return 0; // should be replaced by student code
+        return 0; // should be replaced by student code
     }
 
    /**
@@ -204,7 +204,7 @@ public class FibonacciHeap {
     */
     public static int totalLinks()
     {    
-    	return 0; // should be replaced by student code
+        return 0; // should be replaced by student code
     }
 
    /**
@@ -215,7 +215,7 @@ public class FibonacciHeap {
     */
     public static int totalCuts()
     {    
-    	return 0; // should be replaced by student code
+        return 0; // should be replaced by student code
     }
 
    /**
@@ -227,18 +227,18 @@ public class FibonacciHeap {
     *  
     */
     public class HeapNode{
-    	private HeapNode next;
-    	private HeapNode prev;
-    	private int key;
+        private HeapNode next;
+        private HeapNode prev;
+        private int key;
 
-    	public HeapNode(int key) {
-    		this.key = key;
-    		this.next = null;
-    		this.prev = null;
-    	}
-    	
-    	public int getKey(){
-    		return this.key;
-    	}
+        public HeapNode(int key) {
+            this.key = key;
+            this.next = null;
+            this.prev = null;
+        }
+        
+        public int getKey(){
+            return this.key;
+        }
     }
 }
