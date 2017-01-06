@@ -65,7 +65,7 @@ public class FibonacciHeap {
     * Delete the node containing the minimum key.
     *
     */
-    public void deleteMin() throws DeleteNullException
+    public void deleteMin() throws NullArgumentException
     {
         this.delete(this.minimum);
     }
@@ -76,7 +76,7 @@ public class FibonacciHeap {
     * Return the node of the heap whose key is minimal. 
     *
     */
-    public HeapNode findMin() throws DeleteNullException
+    public HeapNode findMin() throws NullArgumentException
     {
         return this.minimum;
     } 
@@ -87,9 +87,32 @@ public class FibonacciHeap {
     * Meld the heap with heap2
     *
     */
-    public void meld(FibonacciHeap heap2)
+    public void meld(FibonacciHeap heap2) throws NullArgumentException
     {
-    	return; // should be replaced by student code           
+        if (heap2 == null) {
+            throw new NullArgumentException();
+        }
+        
+        if (heap2.size == 0) {
+            return;
+        }
+        
+        if (this.size > 0) {
+            if (heap2.minimum.getKey() < this.minimum.getKey()) {
+                this.minimum = heap2.minimum;
+            }
+            HeapNode lastNodeOfHeap2 = heap2.start.prev;
+            HeapNode lastNodeOfHeap1 = this.start.prev;
+            
+            this.start.prev = lastNodeOfHeap2;
+            lastNodeOfHeap1.next = heap2.start;
+            heap2.start.prev = lastNodeOfHeap1;
+            lastNodeOfHeap2.next = this.start;
+        } else {
+            this.start = heap2.start;
+            this.minimum = heap2.minimum;
+        }
+        this.size += heap2.size;
     }
 
    /**
@@ -132,12 +155,12 @@ public class FibonacciHeap {
     * Deletes the node x from the heap. 
     *
     */
-    public void delete(HeapNode nodeToDelete) throws DeleteNullException
+    public void delete(HeapNode nodeToDelete) throws NullArgumentException
     {    
-    	if (nodeToDelete == null) {
-    		throw new DeleteNullException();
-    	}
-    	
+        if (nodeToDelete == null) {
+            throw new NullArgumentException();
+        }
+        
         this.size--;
         
         if (this.size == 0) {
@@ -246,7 +269,7 @@ public class FibonacciHeap {
         }
     }
     
-    public class DeleteNullException extends Exception {
-        public DeleteNullException(){}
+    public class NullArgumentException extends Exception {
+        public NullArgumentException(){}
     }
 }
