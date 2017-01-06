@@ -186,7 +186,18 @@ public class FibonacciHeapTester {
         heap1.meld(heap2);
         Assert.assertEquals(null, heap1.findMin());
     }
-
-
     
+    @Test
+    public void oneWithOneMeld() throws NullArgumentException{
+    	FibonacciHeap heap1 = new FibonacciHeap();
+        FibonacciHeap heap2 = new FibonacciHeap();
+        heap1.insert(9);
+        heap2.insert(2);
+        heap1.meld(heap2);
+        Assert.assertEquals(2, heap1.findMin().getKey());
+        heap1.deleteMin();
+        Assert.assertEquals(9, heap1.findMin().getKey());
+        heap1.deleteMin();
+        Assert.assertEquals(null, heap1.findMin());
+    }
 }
