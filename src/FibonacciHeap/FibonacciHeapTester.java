@@ -1,11 +1,14 @@
 package FibonacciHeap;
 
 import org.junit.Test;
+
+import FibonacciHeap.FibonacciHeap.DeleteNullException;
+
 import org.junit.Assert;
 
 public class FibonacciHeapTester {
     @Test
-    public void TestInsertAndDeleteMin() {
+    public void TestInsertAndDeleteMin() throws DeleteNullException {
         FibonacciHeap heap = new FibonacciHeap();
         heap.insert(9);
         heap.insert(2);
@@ -35,5 +38,18 @@ public class FibonacciHeapTester {
         Assert.assertEquals(83, heap.findMin().getKey());
         heap.deleteMin();
         Assert.assertEquals(null, heap.findMin());
+    }
+
+    @Test(expected=DeleteNullException.class)
+    public void deleteNullEmptyHeap() throws DeleteNullException {
+        FibonacciHeap heap = new FibonacciHeap();
+        heap.delete(null);
+    }
+    
+    @Test(expected=DeleteNullException.class)
+    public void deleteNullNonEmptyHeap() throws DeleteNullException {
+        FibonacciHeap heap = new FibonacciHeap();
+        heap.insert(1);
+        heap.delete(null);
     }
 }
