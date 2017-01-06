@@ -1,8 +1,9 @@
 package FibonacciHeap;
 
 import org.junit.Test;
-
 import org.junit.Assert;
+
+import FibonacciHeap.FibonacciHeap.HeapNode;
 
 public class FibonacciHeapTester {
     @Test
@@ -204,5 +205,88 @@ public class FibonacciHeapTester {
         FibonacciHeap heap = new FibonacciHeap();
         heap.insert(1);
         heap.meld(null);
+    }
+    
+    @Test
+    public void decreaseKeyChangeMinTester() throws IllegalArgumentException {
+    	FibonacciHeap heap1 = new FibonacciHeap();
+        HeapNode nodeToDecreaseKey = heap1.insert(9);
+        heap1.insert(2);
+        heap1.insert(47);
+        heap1.insert(13);
+        heap1.insert(7);
+        heap1.insert(5);
+        heap1.insert(22);
+        heap1.insert(83);
+        heap1.decreaseKey(nodeToDecreaseKey, 8);
+        Assert.assertEquals(1, heap1.findMin().getKey());
+
+    }
+    
+    @Test
+    public void decreaseKeyTester() throws IllegalArgumentException {
+    	FibonacciHeap heap1 = new FibonacciHeap();
+        HeapNode nodeToDecreaseKey1 = heap1.insert(9);
+        HeapNode nodeToDecreaseKey2 = heap1.insert(15);
+        HeapNode nodeToDecreaseKey3 = heap1.insert(47);
+        HeapNode nodeToDecreaseKey4 = heap1.insert(13);
+        HeapNode nodeToDecreaseKey5 = heap1.insert(7);
+        HeapNode nodeToDecreaseKey6 =  heap1.insert(5);
+        HeapNode nodeToDecreaseKey7 = heap1.insert(22);
+        HeapNode nodeToDecreaseKey8 = heap1.insert(83);
+        heap1.decreaseKey(nodeToDecreaseKey1, 0);
+        Assert.assertEquals(5, heap1.findMin().getKey());
+        heap1.decreaseKey(nodeToDecreaseKey2, 0);
+        Assert.assertEquals(5, heap1.findMin().getKey());
+        heap1.decreaseKey(nodeToDecreaseKey3, 7);
+        Assert.assertEquals(5, heap1.findMin().getKey());
+        heap1.decreaseKey(nodeToDecreaseKey4, 3);
+        Assert.assertEquals(5, heap1.findMin().getKey());
+        heap1.decreaseKey(nodeToDecreaseKey5, 5);
+        Assert.assertEquals(2, heap1.findMin().getKey());
+        heap1.decreaseKey(nodeToDecreaseKey6, 0);
+        Assert.assertEquals(2, heap1.findMin().getKey());
+        heap1.decreaseKey(nodeToDecreaseKey7, 4);
+        Assert.assertEquals(2, heap1.findMin().getKey());
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void decreaseKeyNull() throws IllegalArgumentException {
+        FibonacciHeap heap = new FibonacciHeap();
+        heap.insert(1);
+        heap.decreaseKey(null, 8);
+    }
+    
+    @Test
+    public void decreaseKeyAndDelete() throws IllegalArgumentException {
+    	FibonacciHeap heap1 = new FibonacciHeap();
+        HeapNode nodeToDecreaseKey1 = heap1.insert(9);
+        HeapNode nodeToDecreaseKey2 = heap1.insert(15);
+        HeapNode nodeToDecreaseKey3 = heap1.insert(47);
+        HeapNode nodeToDecreaseKey4 = heap1.insert(13);
+        HeapNode nodeToDecreaseKey5 = heap1.insert(7);
+        HeapNode nodeToDecreaseKey6 =  heap1.insert(5);
+        HeapNode nodeToDecreaseKey7 = heap1.insert(22);
+        HeapNode nodeToDecreaseKey8 = heap1.insert(83);
+        heap1.decreaseKey(nodeToDecreaseKey1, 0);
+        Assert.assertEquals(5, heap1.findMin().getKey());
+        heap1.decreaseKey(nodeToDecreaseKey2, 0);
+        Assert.assertEquals(5, heap1.findMin().getKey());
+        heap1.decreaseKey(nodeToDecreaseKey3, 7);
+        Assert.assertEquals(5, heap1.findMin().getKey());
+        heap1.deleteMin();
+        Assert.assertEquals(7, heap1.findMin().getKey());
+        heap1.decreaseKey(nodeToDecreaseKey4, 3);
+        Assert.assertEquals(7, heap1.findMin().getKey());
+        heap1.decreaseKey(nodeToDecreaseKey5, 5);
+        Assert.assertEquals(2, heap1.findMin().getKey());
+        heap1.deleteMin();
+        Assert.assertEquals(9, heap1.findMin().getKey());
+        heap1.deleteMin();
+        Assert.assertEquals(10, heap1.findMin().getKey());
+        heap1.deleteMin();
+        Assert.assertEquals(15, heap1.findMin().getKey());
+        heap1.decreaseKey(nodeToDecreaseKey7, 4);
+        Assert.assertEquals(15, heap1.findMin().getKey());
     }
 }

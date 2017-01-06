@@ -204,9 +204,16 @@ public class FibonacciHeap {
     * The function decreases the key of the node x by delta. The structure of the heap should be updated
     * to reflect this chage (for example, the cascading cuts procedure should be applied if needed).
     */
-    public void decreaseKey(HeapNode x, int delta)
-    {    
-        return; // should be replaced by student code
+    public void decreaseKey(HeapNode nodeToDecrease, int delta) throws IllegalArgumentException
+    {
+        if (nodeToDecrease == null || delta < 0) {
+            throw new IllegalArgumentException();
+        }
+        nodeToDecrease.key -= delta;
+        
+        if (this.minimum.key > nodeToDecrease.key) {
+            this.minimum = nodeToDecrease;
+        }
     }
 
    /**
