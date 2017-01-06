@@ -138,24 +138,35 @@ public class FibonacciHeap {
     	
     	if (this.size == 0) {
     		this.start = null;
-    		this.minimum = null;
     	} else {
     		if (this.start == nodeToDelete){
         		this.start = nodeToDelete.next;
         	}
-	    	
 	    	nodeToDelete.prev.next = nodeToDelete.next;
 	    	nodeToDelete.next.prev = nodeToDelete.prev;
-	
-	    	if (nodeToDelete == this.minimum) {
-		    	this.minimum = this.start;
-		    	HeapNode currentNode = this.start.next;
-		    	while (currentNode != this.start){
-		    		if (currentNode.key < this.minimum.key){
-		    			this.minimum = currentNode;
-		    		}
-		    		currentNode = currentNode.next;
-		    	}
+    	}
+    	
+    	if (nodeToDelete == this.minimum) {
+	    	this.refindMin();
+    	}
+    }
+    
+    /**
+     * private void refindMin()
+     *
+     * The function finds the new minimum
+     */
+    private void refindMin() {
+    	if (this.start == null) {
+    		this.minimum = null;
+    	} else {
+	    	this.minimum = this.start;
+	    	HeapNode currentNode = this.start.next;
+	    	while (currentNode != this.start){
+	    		if (currentNode.key < this.minimum.key){
+	    			this.minimum = currentNode;
+	    		}
+	    		currentNode = currentNode.next;
 	    	}
     	}
     }
