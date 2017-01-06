@@ -33,6 +33,7 @@ public class FibonacciHeapTester {
 		Assert.assertEquals(47, heap.findMin().getKey());
 		heap.deleteMin();
 		Assert.assertEquals(83, heap.findMin().getKey());
-		heap.deleteMin();		
+		heap.deleteMin();
+		Assert.assertEquals(null, heap.findMin());
 	}
 }

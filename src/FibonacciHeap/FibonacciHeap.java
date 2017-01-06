@@ -135,20 +135,27 @@ public class FibonacciHeap {
     public void delete(HeapNode nodeToDelete) 
     {    
     	this.size--;
-    	if (this.start == nodeToDelete){
-    		this.start = nodeToDelete.next;
-    	}
-    	nodeToDelete.prev.next = nodeToDelete.next;
-    	nodeToDelete.next.prev = nodeToDelete.prev;
-
-    	if (nodeToDelete == this.minimum) {
-	    	this.minimum = this.start;
-	    	HeapNode currentNode = this.start.next;
-	    	while (currentNode != this.start){
-	    		if (currentNode.key < this.minimum.key){
-	    			this.minimum = currentNode;
-	    		}
-	    		currentNode = currentNode.next;
+    	
+    	if (this.size == 0) {
+    		this.start = null;
+    		this.minimum = null;
+    	} else {
+    		if (this.start == nodeToDelete){
+        		this.start = nodeToDelete.next;
+        	}
+	    	
+	    	nodeToDelete.prev.next = nodeToDelete.next;
+	    	nodeToDelete.next.prev = nodeToDelete.prev;
+	
+	    	if (nodeToDelete == this.minimum) {
+		    	this.minimum = this.start;
+		    	HeapNode currentNode = this.start.next;
+		    	while (currentNode != this.start){
+		    		if (currentNode.key < this.minimum.key){
+		    			this.minimum = currentNode;
+		    		}
+		    		currentNode = currentNode.next;
+		    	}
 	    	}
     	}
     }
