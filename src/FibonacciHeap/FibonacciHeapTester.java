@@ -16,23 +16,23 @@ public class FibonacciHeapTester {
 		heap.insert(22);
 		heap.insert(1);
 		heap.insert(83);
-		Assert.assertEquals(1, heap.findMin());
+		Assert.assertEquals(1, heap.findMin().getKey());
 		heap.deleteMin();
-		Assert.assertEquals(2, heap.findMin());
+		Assert.assertEquals(2, heap.findMin().getKey());
 		heap.deleteMin();
-		Assert.assertEquals(5, heap.findMin());
+		Assert.assertEquals(5, heap.findMin().getKey());
 		heap.deleteMin();
-		Assert.assertEquals(7, heap.findMin());
+		Assert.assertEquals(7, heap.findMin().getKey());
 		heap.deleteMin();
-		Assert.assertEquals(9, heap.findMin());
+		Assert.assertEquals(9, heap.findMin().getKey());
 		heap.deleteMin();
-		Assert.assertEquals(13, heap.findMin());
+		Assert.assertEquals(13, heap.findMin().getKey());
 		heap.deleteMin();
-		Assert.assertEquals(22, heap.findMin());
+		Assert.assertEquals(22, heap.findMin().getKey());
 		heap.deleteMin();
-		Assert.assertEquals(47, heap.findMin());
+		Assert.assertEquals(47, heap.findMin().getKey());
 		heap.deleteMin();
-		Assert.assertEquals(83, heap.findMin());
+		Assert.assertEquals(83, heap.findMin().getKey());
 		heap.deleteMin();		
 	}
 }
