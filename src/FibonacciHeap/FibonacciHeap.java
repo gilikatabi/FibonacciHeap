@@ -65,7 +65,7 @@ public class FibonacciHeap {
     * Delete the node containing the minimum key.
     *
     */
-    public void deleteMin() throws NullArgumentException
+    public void deleteMin() throws IllegalArgumentException
     {
         this.delete(this.minimum);
     }
@@ -76,7 +76,7 @@ public class FibonacciHeap {
     * Return the node of the heap whose key is minimal. 
     *
     */
-    public HeapNode findMin() throws NullArgumentException
+    public HeapNode findMin()
     {
         return this.minimum;
     } 
@@ -87,10 +87,10 @@ public class FibonacciHeap {
     * Meld the heap with heap2
     *
     */
-    public void meld(FibonacciHeap heap2) throws NullArgumentException
+    public void meld(FibonacciHeap heap2) throws IllegalArgumentException
     {
         if (heap2 == null) {
-            throw new NullArgumentException();
+            throw new IllegalArgumentException();
         }
         
         if (heap2.size == 0) {
@@ -155,10 +155,10 @@ public class FibonacciHeap {
     * Deletes the node x from the heap. 
     *
     */
-    public void delete(HeapNode nodeToDelete) throws NullArgumentException
+    public void delete(HeapNode nodeToDelete) throws IllegalArgumentException
     {    
         if (nodeToDelete == null) {
-            throw new NullArgumentException();
+            throw new IllegalArgumentException();
         }
         
         this.size--;
@@ -267,9 +267,5 @@ public class FibonacciHeap {
         public int getKey(){
             return this.key;
         }
-    }
-    
-    public class NullArgumentException extends Exception {
-        public NullArgumentException(){}
     }
 }

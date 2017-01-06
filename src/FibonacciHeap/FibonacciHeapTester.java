@@ -2,13 +2,11 @@ package FibonacciHeap;
 
 import org.junit.Test;
 
-import FibonacciHeap.FibonacciHeap.NullArgumentException;
-
 import org.junit.Assert;
 
 public class FibonacciHeapTester {
     @Test
-    public void TestInsertAndDeleteMin() throws NullArgumentException {
+    public void TestInsertAndDeleteMin() throws IllegalArgumentException {
         FibonacciHeap heap = new FibonacciHeap();
         heap.insert(9);
         heap.insert(2);
@@ -40,21 +38,21 @@ public class FibonacciHeapTester {
         Assert.assertEquals(null, heap.findMin());
     }
 
-    @Test(expected=NullArgumentException.class)
-    public void deleteNullEmptyHeap() throws NullArgumentException {
+    @Test(expected=IllegalArgumentException.class)
+    public void deleteNullEmptyHeap() throws IllegalArgumentException {
         FibonacciHeap heap = new FibonacciHeap();
         heap.delete(null);
     }
     
-    @Test(expected=NullArgumentException.class)
-    public void deleteNullNonEmptyHeap() throws NullArgumentException {
+    @Test(expected=IllegalArgumentException.class)
+    public void deleteNullNonEmptyHeap() throws IllegalArgumentException {
         FibonacciHeap heap = new FibonacciHeap();
         heap.insert(1);
         heap.delete(null);
     }
     
     @Test
-    public void meld() throws NullArgumentException {
+    public void meld() throws IllegalArgumentException {
         FibonacciHeap heap1 = new FibonacciHeap();
         heap1.insert(9);
         heap1.insert(2);
@@ -110,7 +108,7 @@ public class FibonacciHeapTester {
     }
     
     @Test
-    public void meldWithEmptyHeap() throws NullArgumentException {
+    public void meldWithEmptyHeap() throws IllegalArgumentException {
         FibonacciHeap heap1 = new FibonacciHeap();
         heap1.insert(9);
         heap1.insert(2);
@@ -145,7 +143,7 @@ public class FibonacciHeapTester {
 
     }
     @Test
-    public void EmptyHeapMeldWithFullHeap() throws NullArgumentException {
+    public void EmptyHeapMeldWithFullHeap() throws IllegalArgumentException {
         FibonacciHeap heap1 = new FibonacciHeap();
         FibonacciHeap heap2 = new FibonacciHeap();
         heap2.insert(9);
@@ -180,7 +178,7 @@ public class FibonacciHeapTester {
     }
     
     @Test
-    public void EmptyHeapMeldWithEmptyHeap() throws NullArgumentException {
+    public void EmptyHeapMeldWithEmptyHeap() throws IllegalArgumentException {
         FibonacciHeap heap1 = new FibonacciHeap();
         FibonacciHeap heap2 = new FibonacciHeap();
         heap1.meld(heap2);
@@ -188,7 +186,7 @@ public class FibonacciHeapTester {
     }
     
     @Test
-    public void oneWithOneMeld() throws NullArgumentException{
+    public void oneWithOneMeld() throws IllegalArgumentException {
     	FibonacciHeap heap1 = new FibonacciHeap();
         FibonacciHeap heap2 = new FibonacciHeap();
         heap1.insert(9);
@@ -199,5 +197,12 @@ public class FibonacciHeapTester {
         Assert.assertEquals(9, heap1.findMin().getKey());
         heap1.deleteMin();
         Assert.assertEquals(null, heap1.findMin());
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void meldWithNull() throws IllegalArgumentException {
+        FibonacciHeap heap = new FibonacciHeap();
+        heap.insert(1);
+        heap.meld(null);
     }
 }
