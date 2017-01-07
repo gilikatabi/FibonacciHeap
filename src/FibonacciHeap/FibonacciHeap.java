@@ -277,11 +277,25 @@ public class FibonacciHeap {
         }
         
         if (nodeToDecrease.parent != null && nodeToDecrease.key < nodeToDecrease.parent.key) {
-            this.cut(nodeToDecrease);
+            this.cascadingCut(nodeToDecrease);
+        }
+    }
+
+    private void cascadingCut(HeapNode node) {
+        HeapNode prevParent = node.parent;
+        this.cut(node);
+        if (prevParent.parent != null) {
+            if (prevParent.marked == false) {
+                prevParent.marked = true;
+            } else {
+                this.cascadingCut(prevParent);
+            }
         }
     }
     
+    
     private void cut(HeapNode node) {
+        node.marked = false;
         node.parent.rank -= 1;
         if (node.parent.child == node) {
             node.parent.child = node.next;
@@ -348,6 +362,7 @@ public class FibonacciHeap {
         private HeapNode parent;
         private HeapNode child;
         private int rank;
+        private boolean marked;
 
         public HeapNode(int key) {
             this.key = key;
@@ -356,6 +371,7 @@ public class FibonacciHeap {
             this.parent = null;
             this.child = null;
             this.rank = 0;
+            this.marked = false;
         }
         
         public int getKey(){
