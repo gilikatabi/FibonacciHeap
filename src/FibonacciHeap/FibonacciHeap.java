@@ -254,7 +254,7 @@ public class FibonacciHeap {
             }
             linkArray[linkTree.rank] = linkTree;
             if (this.minimum == null || linkTree.key < this.minimum.key) {
-            	this.minimum = linkTree;
+                this.minimum = linkTree;
             }
         } while (currentNode != this.start && currentNode.parent != this.start);
     }
@@ -275,6 +275,26 @@ public class FibonacciHeap {
         if (this.minimum.key > nodeToDecrease.key) {
             this.minimum = nodeToDecrease;
         }
+        
+        if (nodeToDecrease.parent != null && nodeToDecrease.key < nodeToDecrease.parent.key) {
+            this.cut(nodeToDecrease);
+        }
+    }
+    
+    private void cut(HeapNode node) {
+        node.parent.rank -= 1;
+        if (node.parent.child == node) {
+            node.parent.child = node.next;
+        }
+        node.next.prev = node.prev;
+        node.prev.next = node.next;
+        node.parent = null;
+        
+        node.next = this.start;
+        node.prev = this.start.prev;
+        node.next.prev = node;
+        node.prev.next = node;
+        this.start = node;
     }
 
    /**
