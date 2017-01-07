@@ -143,6 +143,7 @@ public class FibonacciHeapTester {
         Assert.assertEquals(null, heap1.findMin());
 
     }
+    
     @Test
     public void EmptyHeapMeldWithFullHeap() throws IllegalArgumentException {
         FibonacciHeap heap1 = new FibonacciHeap();
@@ -288,5 +289,20 @@ public class FibonacciHeapTester {
         Assert.assertEquals(15, heap1.findMin().getKey());
         heap1.decreaseKey(nodeToDecreaseKey7, 4);
         Assert.assertEquals(15, heap1.findMin().getKey());
+    }
+    
+    @Test
+    public void decreaseKeyAndDelete2() throws IllegalArgumentException {
+    	FibonacciHeap heap = new FibonacciHeap();
+    	heap.insert(4);
+    	heap.insert(2);
+    	HeapNode nodeToDecrease1 = heap.insert(3);
+    	HeapNode nodeToDecrease2 = heap.insert(5);
+    	heap.insert(1);
+    	heap.deleteMin();
+    	heap.decreaseKey(nodeToDecrease1, 2);
+    	heap.decreaseKey(nodeToDecrease2, 5);
+    	heap.deleteMin();
+    	Assert.assertEquals(1, heap.findMin().getKey());
     }
 }

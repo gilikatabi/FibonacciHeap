@@ -67,7 +67,31 @@ public class FibonacciHeap {
     */
     public void deleteMin() throws IllegalArgumentException
     {
-        this.delete(this.minimum);
+        if (this.minimum == null) {
+            throw new IllegalArgumentException();
+        }
+        
+        this.size--;
+        
+        if (this.size == 0) {
+            this.start = null;
+            this.minimum = null;
+        } else {
+            if (this.start == this.minimum){
+                this.start = this.minimum.next;
+            }
+            
+            if (this.start == this.minimum) {
+                this.start = this.minimum.child;
+            } else {
+                this.minimum.prev.next = this.minimum.next;
+                this.minimum.next.prev = this.minimum.prev;
+                this.meldHeapToLinkedList(this.minimum.child);
+            }
+
+            this.minimum = null;
+            this.consolidate();
+        }
     }
 
    /**
@@ -97,22 +121,31 @@ public class FibonacciHeap {
             return;
         }
         
-        if (this.size > 0) {
-            if (heap2.minimum.getKey() < this.minimum.getKey()) {
-                this.minimum = heap2.minimum;
-            }
-            HeapNode lastNodeOfHeap2 = heap2.start.prev;
-            HeapNode lastNodeOfHeap1 = this.start.prev;
-            
-            this.start.prev = lastNodeOfHeap2;
-            lastNodeOfHeap1.next = heap2.start;
-            heap2.start.prev = lastNodeOfHeap1;
-            lastNodeOfHeap2.next = this.start;
-        } else {
-            this.start = heap2.start;
+        if (this.size == 0 || heap2.minimum.getKey() < this.minimum.getKey()) {
             this.minimum = heap2.minimum;
         }
+        
+        this.meldHeapToLinkedList(heap2.start);
         this.size += heap2.size;
+    }
+    
+    
+    public void meldHeapToLinkedList(HeapNode firstNode) {
+        
+        if (firstNode == null) {
+            return;
+        }
+        if (this.start != null) {
+            HeapNode lastChild = firstNode.prev;
+            HeapNode lastNodeOfHeap = this.start.prev;
+            
+            this.start.prev = lastChild;
+            lastNodeOfHeap.next = firstNode;
+            firstNode.prev = lastNodeOfHeap;
+            lastChild.next = this.start;
+        } else {
+            this.start = firstNode;
+        }
     }
 
    /**
@@ -156,46 +189,74 @@ public class FibonacciHeap {
     *
     */
     public void delete(HeapNode nodeToDelete) throws IllegalArgumentException
-    {    
+    {
         if (nodeToDelete == null) {
             throw new IllegalArgumentException();
         }
+        int delta = nodeToDelete.key - this.minimum.key - 1;
+        decreaseKey(nodeToDelete, delta);
         
-        this.size--;
-        
-        if (this.size == 0) {
-            this.start = null;
-        } else {
-            if (this.start == nodeToDelete){
-                this.start = nodeToDelete.next;
-            }
-            nodeToDelete.prev.next = nodeToDelete.next;
-            nodeToDelete.next.prev = nodeToDelete.prev;
-        }
-        
-        if (nodeToDelete == this.minimum) {
-            this.refindMin();
-        }
+        this.deleteMin();
     }
     
+    
     /**
-     * private void refindMin()
+     * public HeapNode linkTrees(HeapNode node1, HeapNode node2) {
      *
-     * The function finds the new minimum
+     * The function gets two HeapNode, find the one with minimal key
+     * and make him the parent of the bigger one.
      */
-    private void refindMin() {
-        if (this.start == null) {
-            this.minimum = null;
-        } else {
-            this.minimum = this.start;
-            HeapNode currentNode = this.start.next;
-            while (currentNode != this.start){
-                if (currentNode.key < this.minimum.key){
-                    this.minimum = currentNode;
-                }
-                currentNode = currentNode.next;
-            }
+    public HeapNode linkTrees(HeapNode node1, HeapNode node2) {
+
+        if (node2.key < node1.key) {
+            HeapNode tmp;
+            tmp = node1;
+            node1 = node2;
+            node2 = tmp;
         }
+        
+        if (this.start == node2) {
+            this.start = node2.next;
+        }
+        
+        node2.prev.next = node2.next;
+        node2.next.prev = node2.prev;
+        
+        
+        node2.parent = node1;
+        if (node1.child == null) {
+            node1.child = node2;
+            node2.next = node2;
+            node2.prev = node2;
+        } else {
+            node2.next = node1.child;
+            node1.child = node2;
+            node2.prev = node2.next.prev;
+            node2.next.prev = node2;
+            node2.prev.next = node2;    
+        }
+        
+        node1.rank += 1;
+        return node1;
+    }
+    
+    public void consolidate() {
+        HeapNode[] linkArray = new HeapNode[100];//TODO - not 100, but logn
+        HeapNode currentNode = this.start;
+        do {
+            HeapNode linkTree = currentNode;
+            currentNode = currentNode.next;
+
+            while (linkArray[linkTree.rank] != null) {
+                HeapNode prevNode = linkArray[linkTree.rank];
+                linkArray[linkTree.rank] = null;
+                linkTree = linkTrees(linkTree, prevNode);
+            }
+            linkArray[linkTree.rank] = linkTree;
+            if (this.minimum == null || linkTree.key < this.minimum.key) {
+            	this.minimum = linkTree;
+            }
+        } while (currentNode != this.start && currentNode.parent != this.start);
     }
 
    /**
@@ -264,11 +325,17 @@ public class FibonacciHeap {
         private HeapNode next;
         private HeapNode prev;
         private int key;
+        private HeapNode parent;
+        private HeapNode child;
+        private int rank;
 
         public HeapNode(int key) {
             this.key = key;
             this.next = null;
             this.prev = null;
+            this.parent = null;
+            this.child = null;
+            this.rank = 0;
         }
         
         public int getKey(){
