@@ -297,9 +297,13 @@ public class FibonacciHeap {
     private void cut(HeapNode node) {
         node.marked = false;
         node.parent.rank -= 1;
-        if (node.parent.child == node) {
+
+        if (node.next == node) {
+            node.parent.child = null;
+        } else if (node.parent.child == node) {
             node.parent.child = node.next;
         }
+
         node.next.prev = node.prev;
         node.prev.next = node.next;
         node.parent = null;
