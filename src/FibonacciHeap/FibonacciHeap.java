@@ -195,7 +195,7 @@ public class FibonacciHeap {
         if (nodeToDelete == null) {
             throw new IllegalArgumentException();
         }
-        int delta = nodeToDelete.key - this.minimum.key - 1;
+        int delta = nodeToDelete.key - this.minimum.key + 1;
         decreaseKey(nodeToDelete, delta);
         
         this.deleteMin();
