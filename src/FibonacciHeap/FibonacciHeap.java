@@ -1,6 +1,7 @@
 package FibonacciHeap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * FibonacciHeap
@@ -172,9 +173,29 @@ public class FibonacciHeap {
     */
     public int[] countersRep()
     {
-        int[] arr = new int[42];
-        return arr; //     to be replaced by student code
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        HeapNode currentNode = this.start;
+
+        do {
+            addZeroToArr(arr, currentNode.rank + 1);
+            arr.set(currentNode.rank, arr.get(currentNode.rank) + 1);
+            currentNode = currentNode.next;
+        } while (currentNode != this.start);
+        
+        int[] retArr = new int[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            retArr[i] = arr.get(i);
+        }
+        return retArr;
     }
+
+    private void addZeroToArr(ArrayList<Integer> arr, int minSize) {
+        while (arr.size() < minSize) {
+            arr.add(0);
+        }
+    }
+
+
 
    /**
     * public void arrayToHeap()
@@ -182,8 +203,9 @@ public class FibonacciHeap {
     * Insert the array to the heap. Delete previous elemnts in the heap.
     * 
     */
-    public void arrayToHeap(int[] array)
+    public void arrayToHeap(int[] array) //TODO? not in the instruction
     {
+        
         return; //     to be replaced by student code
     }
     
