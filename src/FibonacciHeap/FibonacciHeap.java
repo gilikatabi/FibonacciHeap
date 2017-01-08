@@ -19,6 +19,10 @@ public class FibonacciHeap {
         this.minimum = null;
     }
     
+    static private int numberOfLinks;
+    
+    static private int numberOfCuts;
+    
     /**
     * public boolean empty()
     *
@@ -133,7 +137,6 @@ public class FibonacciHeap {
     
     
     public void meldHeapToLinkedList(HeapNode firstNode) {
-        
         if (firstNode == null) {
             return;
         }
@@ -209,6 +212,8 @@ public class FibonacciHeap {
      * and make him the parent of the bigger one.
      */
     public HeapNode linkTrees(HeapNode node1, HeapNode node2) {
+        numberOfLinks += 1;
+
         if (node2.key < node1.key) {
             HeapNode tmp;
             tmp = node1;
@@ -304,6 +309,7 @@ public class FibonacciHeap {
     }
 
     private void cut(HeapNode node) {
+        numberOfCuts += 1;
         node.marked = false;
         node.parent.rank -= 1;
 
@@ -346,7 +352,7 @@ public class FibonacciHeap {
     */
     public static int totalLinks()
     {    
-        return 0; // should be replaced by student code
+        return numberOfLinks;
     }
 
    /**
@@ -357,7 +363,7 @@ public class FibonacciHeap {
     */
     public static int totalCuts()
     {    
-        return 0; // should be replaced by student code
+        return numberOfCuts;
     }
 
    /**
