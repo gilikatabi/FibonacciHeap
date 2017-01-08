@@ -322,12 +322,17 @@ public class FibonacciHeap {
 
     private void cascadingCut(HeapNode node) {
         HeapNode prevParent = node.parent;
+        if (node.marked == true) {
+            numberOfMarked -= 1;        	
+        }
+        if (prevParent.parent != null && prevParent.marked == false) {
+            numberOfMarked += 1;        	
+        }
         this.cut(node);
-        numberOfMarked -= 1;
+        
         if (prevParent.parent != null) {
             if (prevParent.marked == false) {
                 prevParent.marked = true;
-                numberOfMarked += 1;
             } else {
                 this.cascadingCut(prevParent);
             }

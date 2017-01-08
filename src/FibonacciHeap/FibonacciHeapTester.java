@@ -319,4 +319,42 @@ public class FibonacciHeapTester {
         heap.deleteMin();
         Assert.assertEquals(100, heap.findMin().getKey());
     }
+    
+    @Test
+    public void delete() throws IllegalArgumentException {
+        FibonacciHeap heap = new FibonacciHeap();
+        HeapNode nodeToDelete3 = heap.insert(5);
+        heap.insert(2);
+        HeapNode nodeToDelete1 = heap.insert(3);
+        HeapNode nodeToDelete2 = heap.insert(4);
+        heap.insert(1);
+        heap.deleteMin();
+        heap.delete(nodeToDelete1);
+        Assert.assertEquals(2, heap.findMin().getKey());
+        heap.deleteMin();
+        heap.delete(nodeToDelete2);
+        Assert.assertEquals(5, heap.findMin().getKey());
+        heap.delete(nodeToDelete3);
+        Assert.assertEquals(null, heap.findMin());
+    }
+    
+    @Test
+    public void numberOfTreeTest() throws IllegalArgumentException {
+        FibonacciHeap heap = new FibonacciHeap();
+        HeapNode nodeToDecrease3 = heap.insert(4);
+        heap.insert(2);
+        HeapNode nodeToDecrease1 = heap.insert(3);
+        HeapNode nodeToDecrease2 = heap.insert(5);
+        heap.insert(1);
+        heap.deleteMin();
+        Assert.assertEquals(1, heap.potential());
+        heap.decreaseKey(nodeToDecrease1, 2);
+        Assert.assertEquals(2, heap.potential());
+        heap.decreaseKey(nodeToDecrease2, 5);
+        Assert.assertEquals(3, heap.potential());
+        heap.decreaseKey(nodeToDecrease3, 4);
+        Assert.assertEquals(4, heap.potential());
+
+    }
+    
 }
