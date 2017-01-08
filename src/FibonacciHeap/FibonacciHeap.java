@@ -24,6 +24,8 @@ public class FibonacciHeap {
     
     static private int numberOfCuts;
     
+    static private int numberOfMarked;
+    
     /**
     * public boolean empty()
     *
@@ -321,9 +323,11 @@ public class FibonacciHeap {
     private void cascadingCut(HeapNode node) {
         HeapNode prevParent = node.parent;
         this.cut(node);
+        numberOfMarked -= 1;
         if (prevParent.parent != null) {
             if (prevParent.marked == false) {
                 prevParent.marked = true;
+                numberOfMarked += 1;
             } else {
                 this.cascadingCut(prevParent);
             }
@@ -360,8 +364,14 @@ public class FibonacciHeap {
     * The potential equals to the number of trees in the heap plus twice the number of marked nodes in the heap. 
     */
     public int potential() 
-    {    
-        return 0; // should be replaced by student code
+    {   
+        int numOfTrees = 0;
+        int[] treeArray = this.countersRep();
+        for(int i = 0; i < treeArray.length; i++) {
+            numOfTrees += treeArray[i];
+        }
+        int potential = numOfTrees + (2*numberOfMarked);
+        return potential;
     }
 
    /**
