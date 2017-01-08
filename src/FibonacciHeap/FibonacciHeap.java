@@ -1,5 +1,7 @@
 package FibonacciHeap;
 
+import java.util.ArrayList;
+
 /**
  * FibonacciHeap
  *
@@ -207,7 +209,6 @@ public class FibonacciHeap {
      * and make him the parent of the bigger one.
      */
     public HeapNode linkTrees(HeapNode node1, HeapNode node2) {
-
         if (node2.key < node1.key) {
             HeapNode tmp;
             tmp = node1;
@@ -239,27 +240,36 @@ public class FibonacciHeap {
         node1.rank += 1;
         return node1;
     }
-    
+
     public void consolidate() {
-        HeapNode[] linkArray = new HeapNode[100];//TODO - not 100, but logn
+        ArrayList<HeapNode> arr = new ArrayList<HeapNode>();
         HeapNode currentNode = this.start;
         do {
             HeapNode linkTree = currentNode;
             currentNode = currentNode.next;
 
-            while (linkArray[linkTree.rank] != null) {
-                HeapNode prevNode = linkArray[linkTree.rank];
-                linkArray[linkTree.rank] = null;
+            addNullToArr(arr, linkTree.rank + 1);
+            while (arr.get(linkTree.rank) != null) {
+                HeapNode prevNode = arr.get(linkTree.rank);
+                arr.set(linkTree.rank, null);
                 linkTree = linkTrees(linkTree, prevNode);
+                addNullToArr(arr, linkTree.rank + 1);
             }
-            linkArray[linkTree.rank] = linkTree;
+
+            arr.set(linkTree.rank, linkTree);
             if (this.minimum == null || linkTree.key < this.minimum.key) {
                 this.minimum = linkTree;
             }
         } while (currentNode != this.start && currentNode.parent != this.start);
     }
 
-   /**
+    private void addNullToArr(ArrayList<HeapNode> arr, int minSize) {
+        while (arr.size() < minSize) {
+            arr.add(null);
+        }
+    }
+
+    /**
     * public void decreaseKey(HeapNode x, int delta)
     *
     * The function decreases the key of the node x by delta. The structure of the heap should be updated
@@ -292,8 +302,7 @@ public class FibonacciHeap {
             }
         }
     }
-    
-    
+
     private void cut(HeapNode node) {
         node.marked = false;
         node.parent.rank -= 1;
