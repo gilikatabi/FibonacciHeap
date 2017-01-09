@@ -357,4 +357,57 @@ public class FibonacciHeapTester {
 
     }
     
+    @Test
+    public void potentialTest() throws IllegalArgumentException {
+    	FibonacciHeap heap = new FibonacciHeap();
+        HeapNode nodeToDecreaseKey9 = heap.insert(10);
+        HeapNode nodeToDecreaseKey1 = heap.insert(9);
+        HeapNode nodeToDecreaseKey2 = heap.insert(19);
+        HeapNode nodeToDecreaseKey3 = heap.insert(47);
+        HeapNode nodeToDecreaseKey4 = heap.insert(13);
+        HeapNode nodeToDecreaseKey5 = heap.insert(7);
+        HeapNode nodeToDecreaseKey6 =  heap.insert(5);
+        HeapNode nodeToDecreaseKey7 = heap.insert(22);
+        HeapNode nodeToDecreaseKey8 = heap.insert(83);
+        heap.deleteMin();
+        Assert.assertEquals(7, heap.findMin().getKey());
+        heap.decreaseKey(nodeToDecreaseKey2, 11);
+        Assert.assertEquals(4, heap.potential());
+        Assert.assertEquals(7, heap.findMin().getKey());
+        heap.decreaseKey(nodeToDecreaseKey8, 70);
+        Assert.assertEquals(7, heap.potential());        
+        heap.decreaseKey(nodeToDecreaseKey9, 10);
+        Assert.assertEquals(0, heap.findMin().getKey());
+        Assert.assertEquals(7, heap.potential());
+    }
+    
+    @Test
+    public void counterArrayTest() throws IllegalArgumentException {
+    	FibonacciHeap heap = new FibonacciHeap();
+        HeapNode nodeToDecreaseKey9 = heap.insert(10);
+        HeapNode nodeToDecreaseKey1 = heap.insert(9);
+        HeapNode nodeToDecreaseKey2 = heap.insert(19);
+        HeapNode nodeToDecreaseKey3 = heap.insert(47);
+        HeapNode nodeToDecreaseKey4 = heap.insert(13);
+        HeapNode nodeToDecreaseKey5 = heap.insert(7);
+        HeapNode nodeToDecreaseKey6 =  heap.insert(5);
+        HeapNode nodeToDecreaseKey7 = heap.insert(22);
+        HeapNode nodeToDecreaseKey8 = heap.insert(83);
+        heap.deleteMin();
+        Assert.assertEquals(1, heap.countersRep()[3]);
+        heap.decreaseKey(nodeToDecreaseKey2, 11);
+        Assert.assertEquals(1, heap.countersRep()[1]);
+        Assert.assertEquals(1, heap.countersRep()[3]);
+        heap.decreaseKey(nodeToDecreaseKey8, 70);
+        Assert.assertEquals(1, heap.countersRep()[0]);
+        Assert.assertEquals(1, heap.countersRep()[1]);
+        Assert.assertEquals(1, heap.countersRep()[3]);        
+        heap.decreaseKey(nodeToDecreaseKey9, 10);
+        Assert.assertEquals(3, heap.countersRep()[0]);
+        Assert.assertEquals(1, heap.countersRep()[1]);
+        Assert.assertEquals(1, heap.countersRep()[2]);
+
+    }
+    
+    
 }
