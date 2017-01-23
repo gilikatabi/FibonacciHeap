@@ -1,11 +1,16 @@
 package FibonacciHeap;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
 import org.junit.Test;
 import org.junit.Assert;
 
 import FibonacciHeap.FibonacciHeap.HeapNode;
 
 public class FibonacciHeapTester {
+	private static Random rand = new Random();
     @Test
     public void TestInsertAndDeleteMin() throws IllegalArgumentException {
         FibonacciHeap heap = new FibonacciHeap();
@@ -409,5 +414,162 @@ public class FibonacciHeapTester {
 
     }
     
+    @Test
+    public void insertAllThenDeleteAllRandomTest() {
+    	FibonacciHeap heap = new FibonacciHeap();
+    	int heapSize = rand.nextInt(100) + 1;
+    	ArrayList<Integer> dataList = new ArrayList<Integer>();
+    	for (int i=0; i < heapSize; i++) {
+    		int n = rand.nextInt(10000000);
+    		heap.insert(n);
+    		dataList.add(n);
+    	}
+    	Collections.sort(dataList);
+    	for (int i=0; i < heapSize; i++) {
+    		//System.out.println(i +" + " + dataList.get(0) + ", " + heap.findMin().getKey());
+    		Assert.assertEquals((int)dataList.get(0), (int)heap.findMin().getKey());
+    		heap.deleteMin();
+    		dataList.remove(0);
+    	}
+    	
+    }
+    
+    @Test
+    public void insertDeleteRandomTest() {
+    	FibonacciHeap heap = new FibonacciHeap();
+    	int numOfSteps = 2 * (rand.nextInt(100) + 1);
+    	int n=0;
+    	for (int i=0; i < numOfSteps; i++) {
+    		if (i%2 == 0) {
+    			n = rand.nextInt(10000000);
+    			heap.insert(n);
+    		} else {
+    			Assert.assertEquals(n, (int)heap.findMin().getKey());
+    			heap.deleteMin();
+    		}
+    	}
+    	Assert.assertEquals(0, heap.size());
+    }
+    
+    
+    @Test
+    public void deleteMinBug() {
+    	FibonacciHeap heap = new FibonacciHeap();
+        heap.insert(6);
+        heap.insert(60);
+        heap.insert(38);
+        heap.insert(64);
+        heap.insert(71);
+        heap.insert(20);
+        heap.insert(46);
+        heap.insert(99);
+        heap.insert(63);
+        heap.insert(32);
+		Assert.assertEquals(6, heap.findMin().getKey());
+		heap.deleteMin();
+		Assert.assertEquals(20, heap.findMin().getKey());
+		heap.deleteMin();
+		Assert.assertEquals(32, heap.findMin().getKey());
+		heap.deleteMin();
+		Assert.assertEquals(38, heap.findMin().getKey());
+		heap.deleteMin();
+		Assert.assertEquals(46, heap.findMin().getKey());
+		heap.deleteMin();
+		Assert.assertEquals(60, heap.findMin().getKey());
+		heap.deleteMin();
+		Assert.assertEquals(63, heap.findMin().getKey());
+		heap.deleteMin();
+		Assert.assertEquals(64, heap.findMin().getKey());
+		heap.deleteMin();
+		Assert.assertEquals(71, heap.findMin().getKey());
+		heap.deleteMin();
+		Assert.assertEquals(99, heap.findMin().getKey());
+		heap.deleteMin();
+		Assert.assertEquals(null, heap.findMin());
+    }
+    
+    @Test
+    public void miniRandInsertDeletMin() {
+    	FibonacciHeap heap = new FibonacciHeap();
+    	int heapSize = 10;
+    	ArrayList<Integer> dataList = new ArrayList<Integer>();
+    	for (int i=0; i < heapSize; i++) {
+    		int n = rand.nextInt(100);
+        	System.out.println("insert " + i +" + " + "number" + n);
+    		heap.insert(n);
+    		dataList.add(n);
+    	}
+    	Collections.sort(dataList);
+    	for (int i=0; i < dataList.size(); i++) {
+            if ((int)dataList.get(0) != (int)heap.findMin().getKey()) {
+            	System.out.println("problem " + i +" + " + dataList.get(0) + ", " + heap.findMin().getKey());
+            }
+    		Assert.assertEquals((int)dataList.get(0), (int)heap.findMin().getKey()); //TODO I believe this bug is the same as the former.
+    		heap.deleteMin();
+    		dataList.remove(0);
+    	}
+    }
+    
+    
+    @Test
+    public void randMeldTest() {
+    	FibonacciHeap firstHeap = new FibonacciHeap();
+    	int firstHeapSize = rand.nextInt(100) + 1;
+    	FibonacciHeap secondHeap = new FibonacciHeap();
+    	int secondHeapSize = rand.nextInt(100) + 1;
+    	ArrayList<Integer> dataList = new ArrayList<Integer>();
+    	for (int i=0; i < firstHeapSize; i++) {
+    		int n = rand.nextInt(10000000);
+    		firstHeap.insert(n);
+    		dataList.add(n);
+    	}
+    	for (int i=0; i < secondHeapSize; i++) {
+    		int n = rand.nextInt(10000000);
+    		secondHeap.insert(n);
+    		dataList.add(n);
+    	}
+    	Collections.sort(dataList);
+    	firstHeap.meld(secondHeap);
+    	Assert.assertEquals(firstHeapSize + secondHeapSize, firstHeap.size());
+    	for (int i=0; i < dataList.size(); i++) {
+    		//System.out.println(i +" + " + dataList.get(0) + ", " + firstHeap.findMin().getKey());
+            if ((int)dataList.get(0) != (int)firstHeap.findMin().getKey()) {
+            	//System.out.println("problem!!! " + i +" + " + dataList.get(0) + ", " + firstHeap.findMin().getKey());
+            }
+    		Assert.assertEquals((int)dataList.get(0), (int)firstHeap.findMin().getKey()); //TODO I believe this bug is the same as the former.
+    		firstHeap.deleteMin();
+    		dataList.remove(0);
+    	}
+    }
+    
+    @Test
+    public void removeHalfAddHaldTest() {
+    	FibonacciHeap heap = new FibonacciHeap();
+    	int heapSize = rand.nextInt(100) + 1;
+    	ArrayList<Integer> dataList = new ArrayList<Integer>();
+    	for (int i=0; i < heapSize; i++) {
+    		int n = rand.nextInt(10000000);
+    		heap.insert(n);
+    		dataList.add(n);
+    	}
+    	Collections.sort(dataList);
+    	for (int i=0; i < heapSize / 2; i++) {
+    		Assert.assertEquals((int)dataList.get(0), (int)heap.findMin().getKey());
+    		heap.deleteMin();
+    		dataList.remove(0);
+    	}
+    	
+    	for (int i=0; i < heapSize / 2; i++) {
+    		int n = rand.nextInt(10000000);
+    		heap.insert(n);
+    		dataList.add(n);
+    	}
+    	Collections.sort(dataList);
+    	for (int i=0; i < dataList.size(); i++) {
+    		Assert.assertEquals((int)dataList.get(0), (int)heap.findMin().getKey());
+    		heap.deleteMin();
+    		dataList.remove(0);
+    	}
+    }
     
 }
